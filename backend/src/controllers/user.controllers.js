@@ -31,17 +31,13 @@ const register = async (req, res) => {
         })
         const token = jwt.sign({ id: user._id, admin: user.admin }, process.env.JWT_SECRET)
 
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: false,
-            // sameSite: "strict",
-            // maxAge: 30 * 60 * 1000
-        })
-
+        res.cookie("token", token)
+        const userWithoutPassword = user.toObject()
+        delete userWithoutPassword.password
         res.status(200).json({
             success: true,
             message: "User created successfully!",
-            user
+            userWithoutPassword
         })
 
     } catch (error) {
@@ -72,9 +68,6 @@ const login = async (req, res) => {
             })
         }
 
-        console.log(userFound);
-
-
         const passwordChecked = await bcrypt.compare(password, userFound.password)
 
         if (!passwordChecked) {
@@ -104,14 +97,14 @@ const login = async (req, res) => {
     }
 }
 
-const getUsersDetailsByAdmin  = async (req, res) => {
+const getUsersDetailsByAdmin = async (req, res) => {
     try {
         const users = await userModel.find({
             role: { $ne: "admin" }
         })
         res.status(200).json({
-            success:true,
-            message:"Data fatched successfully!",
+            success: true,
+            message: "Data fatched successfully!",
             users
         })
 
@@ -123,10 +116,53 @@ const getUsersDetailsByAdmin  = async (req, res) => {
     }
 }
 
+const userDetails = async (req, res) => {
+    try {
+        const { id } = req.userDetails
+
+        const user = await userModel.findById(id)
+
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized!0"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Fatched successfully!",
+            user
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
+const logout = (req, res) => {
+    try {
+        res.clearCookie("token")
+        res.status(200).json({
+            succuss: true,
+            message: "User logged out successfully!"
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
 
 
 export {
     register,
     login,
-    getUsersDetailsByAdmin 
+    getUsersDetailsByAdmin,
+    userDetails,
+    logout
 }

@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { registerUser } from "../services/authService";
+import { UserContext } from "../context/userContext";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +11,9 @@ const Register = () => {
     role: ""
   });
 
+  const { setUserData, userData } = useContext(UserContext)
+  const navigate = useNavigate()
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -16,17 +22,28 @@ const Register = () => {
 
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await registerUser(formData)
+      console.log(res.data.user);
+      
+      if (res.status === 200) {
+        setUserData(res.data.userWithoutPassword)
+        navigate('/')
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
     setFormData({
       name: "",
       email: "",
       password: "",
       role: ""
     })
-    console.log(formData);
-    alert("Form Submitted!");
   };
+
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -101,7 +118,9 @@ const Register = () => {
         >
           Register
         </button>
+        <NavLink to='/login'>have an account? <span className="text-blue-600 font-bold">Login</span></NavLink>
       </form>
+      
     </div>
   );
 };

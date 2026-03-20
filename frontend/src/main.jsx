@@ -5,10 +5,13 @@ import App from "./App.jsx";
 
 import { BrowserRouter } from 'react-router-dom'
 import Navbar from "./components/Navbar.jsx";
+import ContextProvider from "./context/userContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <Navbar />
-    <App />
+    <ContextProvider>
+      <Navbar />
+      <App />
+    </ContextProvider>
   </BrowserRouter>
 );
