@@ -8,11 +8,12 @@ import { fatchedUserData } from './services/authService'
 import { UserContext } from './context/userContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
+import PageNotFound from './pages/PageNotFound'
 
 function App() {
-  const { userData, loading} = useContext(UserContext)
+  const { userData, loading } = useContext(UserContext)
 
-  if(loading) return null
+  if (loading) return null
   return (
     <Routes>
       <Route path='/' element={<Home />} />
@@ -27,6 +28,7 @@ function App() {
         userData ? <Navigate to='/' /> : <Login />
       }
       />
+      <Route path='*' element={<PageNotFound />} />
 
     </Routes>
   )

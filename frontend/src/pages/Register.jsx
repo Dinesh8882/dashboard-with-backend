@@ -10,6 +10,7 @@ const Register = () => {
     password: "",
     role: ""
   });
+  const [err, setErr] = useState("")
 
   const { setUserData, userData } = useContext(UserContext)
   const navigate = useNavigate()
@@ -26,14 +27,16 @@ const Register = () => {
     e.preventDefault();
     try {
       const res = await registerUser(formData)
-      console.log(res.data.user);
-      
+      console.log(res);
+
       if (res.status === 200) {
         setUserData(res.data.userWithoutPassword)
         navigate('/')
       }
     } catch (error) {
-      console.log(error.message);
+      if (!error.response.data.success) {
+        setErr(error.response.data.message)
+      }
     }
     setFormData({
       name: "",
@@ -43,7 +46,7 @@ const Register = () => {
     })
   };
 
-  
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -79,6 +82,7 @@ const Register = () => {
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
+          <p className="text-red-500 text-[14px]">{err}</p>
         </div>
 
         {/* Password */}
@@ -120,7 +124,7 @@ const Register = () => {
         </button>
         <NavLink to='/login'>have an account? <span className="text-blue-600 font-bold">Login</span></NavLink>
       </form>
-      
+
     </div>
   );
 };

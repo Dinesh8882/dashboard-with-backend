@@ -16,9 +16,14 @@ const login = (data)=>{
     return baseAPI.post("/login",data)
 }
 
+const getAllUsers = ()=>{
+    return baseAPI.get("/user-details")
+}
+
 export {
     registerUser,
     fatchedUserData,
     logout,
-    login
+    login,
+    getAllUsers
 }

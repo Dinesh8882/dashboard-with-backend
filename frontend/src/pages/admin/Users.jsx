@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getAllUsers } from "../../services/authService";
 
 const Users = () => {
   const [users, setUsers] = useState([
@@ -6,12 +7,29 @@ const Users = () => {
     { id: 2, name: "Rahul", role: "admin" },
   ]);
 
+  const getUserDetails = async () => {
+    try {
+      const res = await getAllUsers()
+      if (res.data.success) {
+        setUsers(res.data.users)
+        console.log(res);
+
+      }
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {
+    getUserDetails()
+  }, [])
+
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Users</h2>
 
-      {users.map((u) => (
-        <div key={u.id} className="flex justify-between bg-white p-3 mb-2 rounded shadow">
+      {users.map((u,index) => (
+        <div key={index} className="flex justify-between bg-white p-3 mb-2 rounded shadow">
           <p>{u.name}</p>
           <p>{u.role}</p>
         </div>
