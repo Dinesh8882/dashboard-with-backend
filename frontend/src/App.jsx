@@ -9,6 +9,7 @@ import { UserContext } from './context/userContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
 import PageNotFound from './pages/PageNotFound'
+import Profile from './pages/Profile'
 
 function App() {
   const { userData, loading } = useContext(UserContext)
@@ -28,6 +29,7 @@ function App() {
         userData ? <Navigate to='/' /> : <Login />
       }
       />
+      <Route path='/profile' element={<Profile />} />
       <Route path='*' element={<PageNotFound />} />
 
     </Routes>

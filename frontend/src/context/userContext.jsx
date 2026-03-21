@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import { fatchedUserData } from "../services/authService";
+import { fatchedUserData, logout } from "../services/authService";
+import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext()
 
@@ -7,6 +8,7 @@ const ContextProvider = ({ children }) => {
 
     const [userData, setUserData] = useState(null)
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
 
     useEffect(() => {
 
@@ -18,7 +20,7 @@ const ContextProvider = ({ children }) => {
                 if (res.data.success) {
                     setUserData(res.data.user)
                 }
-                
+
             } catch (err) {
                 if (err.response?.status === 401) {
                     setUserData(null);
@@ -27,17 +29,24 @@ const ContextProvider = ({ children }) => {
             } finally {
                 setLoading(false)
             }
-            
+
         }
-        
+
         fatchedData()
     }, [])
-    
+
+    const userLogout = async () => {
+        await logout()
+        setUserData(null)
+        navigate('/')
+    }
+
     const values = {
         setUserData,
         userData,
         loading,
-        setLoading
+        setLoading,
+        userLogout
     }
 
     return (
