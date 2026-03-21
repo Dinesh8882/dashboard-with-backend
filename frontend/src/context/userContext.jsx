@@ -9,25 +9,27 @@ const ContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+
+
         const fatchedData = async () => {
             try {
+                if (userData) return null;
                 const res = await fatchedUserData()
                 if (res.data.success) {
                     setUserData(res.data.user)
                 }
-
+                
             } catch (err) {
                 if (err.response?.status === 401) {
                     setUserData(null);
-                    // console.log(err);
                 } else {
                 }
             } finally {
                 setLoading(false)
             }
-
+            
         }
-
+        
         fatchedData()
     }, [])
     

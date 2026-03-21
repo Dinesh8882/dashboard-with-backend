@@ -8,10 +8,12 @@ const Login = () => {
         email: "",
         password: "",
     });
+    const [error, setError] = useState("")
 
-    const { setUserData, setLoading ,userData} = useContext(UserContext)
+    const { setUserData, setLoading, userData } = useContext(UserContext)
     const navigate = useNavigate()
     const handleChange = (e) => {
+        setError("")
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
@@ -23,22 +25,22 @@ const Login = () => {
         try {
             const res = await login(formData)
             console.log(res);
-            
+
             if (res.data.success) {
                 setUserData(res.data.userWithoutPassword)
                 navigate('/')
             }
-            
-        } catch (error) {
-            console.log(error.message);
+
+        } catch (err) {
+            setError(err.response.data.message)
         }
         finally {
             setLoading(false)
         }
     };
 
-    console.log(userData);
-    
+
+
 
     return (
         <div className="min-h-[80vh] flex items-center justify-center bg-gray-200">
@@ -73,8 +75,9 @@ const Login = () => {
                     Login
                 </button>
                 <NavLink to='/register'>Don't have an account? <span className="text-blue-600 font-bold">Register</span></NavLink>
-
+                <p className="text-red-500 text-center">{error && error}</p>
             </form>
+
         </div>
     );
 };
