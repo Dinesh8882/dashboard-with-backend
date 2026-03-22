@@ -10,6 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
 import PageNotFound from './pages/PageNotFound'
 import Profile from './pages/Profile'
+import UpdateProfile from './pages/UpdateProfile'
 
 function App() {
   const { userData, loading } = useContext(UserContext)
@@ -30,7 +31,10 @@ function App() {
       }
       />
       <Route path='/profile' element={<Profile />} />
+      <Route path='/update-profile' element={<UpdateProfile/>}/>
       <Route path='*' element={<PageNotFound />} />
+
+
 
     </Routes>
   )

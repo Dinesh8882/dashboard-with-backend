@@ -12,12 +12,16 @@ const logout = () => {
     return baseAPI.get("/logout")
 }
 
-const login = (data)=>{
-    return baseAPI.post("/login",data)
+const login = (data) => {
+    return baseAPI.post("/login", data)
 }
 
-const getAllUsers = ()=>{
+const getAllUsers = () => {
     return baseAPI.get("/user-details")
+}
+
+const updateProfile = (data) => {
+    return baseAPI.put("/profile-update",data)
 }
 
 export {
@@ -25,5 +29,6 @@ export {
     fatchedUserData,
     logout,
     login,
-    getAllUsers
+    getAllUsers,
+    updateProfile
 }

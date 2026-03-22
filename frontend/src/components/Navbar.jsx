@@ -6,10 +6,10 @@ import { CgProfile } from "react-icons/cg";
 
 const Navbar = () => {
   const { userData, loading } = useContext(UserContext)
-  if (loading) return null
-
   const navigate = useNavigate()
-
+  
+  
+  if (loading) return null
   const handleNavigate = ()=>{
     navigate("/profile")
   }

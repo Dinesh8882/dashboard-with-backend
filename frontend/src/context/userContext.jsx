@@ -11,8 +11,6 @@ const ContextProvider = ({ children }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-
-
         const fatchedData = async () => {
             try {
                 if (userData) return null;

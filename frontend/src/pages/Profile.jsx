@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/userContext";
-
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-    const { userLogout, userData } = useContext(UserContext)
+    const { userLogout, userData } = useContext(UserContext);
+    const navigate = useNavigate();
+
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -32,13 +34,22 @@ const Profile = () => {
                     </div>
                 </div>
 
-                {/* Logout Button */}
-                <button
-                    onClick={userLogout}
-                    className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
-                >
-                    Logout
-                </button>
+                {/* Buttons */}
+                <div className="flex gap-3">
+                    <button
+                        onClick={() => navigate("/update-profile")}
+                        className="w-1/2 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+                    >
+                        Update Profile
+                    </button>
+
+                    <button
+                        onClick={userLogout}
+                        className="w-1/2 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
+                    >
+                        Logout
+                    </button>
+                </div>
 
             </div>
         </div>

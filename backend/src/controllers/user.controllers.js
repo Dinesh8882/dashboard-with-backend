@@ -158,11 +158,47 @@ const logout = (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    try {
+        const { id } = req.userDetails
+        const { name, email } = req.body
+        const user = await userModel.findByIdAndUpdate(id,
+            {
+                name,
+                email
+            },
+            {new: true}
+        )
+        
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized user!"
+            })
+        }
+
+        res.status(200).json({
+            success:true,
+            message:"User updated successfully!",
+            user
+        })
+
+
+        console.log(user);
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
 
 export {
     register,
     login,
     getUsersDetailsByAdmin,
     userDetails,
-    logout
+    logout,
+    update
 }
