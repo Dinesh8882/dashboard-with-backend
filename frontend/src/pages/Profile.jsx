@@ -1,11 +1,28 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
+import { deleteUser } from "../services/authService";
 
 const Profile = () => {
-    const { userLogout, userData } = useContext(UserContext);
+    const { userLogout, userData, setUserData } = useContext(UserContext);
     const navigate = useNavigate();
 
+    const handleDeleteAccount = async () => {
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete your account? This action cannot be undone."
+        );
+
+        if (!confirmDelete) return;
+
+        try {
+            await deleteUser()
+            setUserData(null)
+            userLogout();
+            navigate("/register");
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -35,20 +52,32 @@ const Profile = () => {
                 </div>
 
                 {/* Buttons */}
-                <div className="flex gap-3">
+                <div className="flex flex-col gap-3">
+
+                    <div className="flex gap-3">
+                        <button
+                            onClick={() => navigate("/update-profile")}
+                            className="w-1/2 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+                        >
+                            Update Profile
+                        </button>
+
+                        <button
+                            onClick={userLogout}
+                            className="w-1/2 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
+                        >
+                            Logout
+                        </button>
+                    </div>
+
+                    {/* Delete Account Button */}
                     <button
-                        onClick={() => navigate("/update-profile")}
-                        className="w-1/2 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+                        onClick={handleDeleteAccount}
+                        className="w-full bg-red-700 text-white py-2 rounded-lg hover:bg-red-800 transition"
                     >
-                        Update Profile
+                        Delete Account
                     </button>
 
-                    <button
-                        onClick={userLogout}
-                        className="w-1/2 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
-                    >
-                        Logout
-                    </button>
                 </div>
 
             </div>

@@ -167,9 +167,9 @@ const update = async (req, res) => {
                 name,
                 email
             },
-            {new: true}
+            { new: true }
         )
-        
+
         if (!user) {
             return res.status(401).json({
                 success: false,
@@ -178,13 +178,33 @@ const update = async (req, res) => {
         }
 
         res.status(200).json({
-            success:true,
-            message:"User updated successfully!",
+            success: true,
+            message: "User updated successfully!",
             user
         })
 
 
         console.log(user);
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
+const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.userDetails
+        await userModel.findByIdAndDelete(id)
+
+        res.clearCookie('token')
+        res.status(200).json({
+            success: true,
+            message: "User deleted successfully!"
+        })
+
 
     } catch (error) {
         res.status(500).json({
@@ -200,5 +220,6 @@ export {
     getUsersDetailsByAdmin,
     userDetails,
     logout,
-    update
+    update,
+    deleteUser
 }

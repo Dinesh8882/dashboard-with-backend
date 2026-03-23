@@ -24,11 +24,16 @@ const updateProfile = (data) => {
     return baseAPI.put("/profile-update",data)
 }
 
+const deleteUser = ()=>{
+    return baseAPI.delete("/delete-profile")
+}
+
 export {
     registerUser,
     fatchedUserData,
     logout,
     login,
     getAllUsers,
-    updateProfile
+    updateProfile,
+    deleteUser
 }
