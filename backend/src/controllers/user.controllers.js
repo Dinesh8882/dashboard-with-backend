@@ -214,6 +214,26 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const deleteUserByAmind = async (req, res) => {
+    try {
+        // console.log(req.params.id);
+        
+        const { id } = req.params
+        await userModel.findByIdAndDelete(id)
+
+        res.status(200).json({
+            success: true,
+            message: "Deleted user successfully!"
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
 export {
     register,
     login,
@@ -221,5 +241,6 @@ export {
     userDetails,
     logout,
     update,
-    deleteUser
+    deleteUser,
+    deleteUserByAmind
 }

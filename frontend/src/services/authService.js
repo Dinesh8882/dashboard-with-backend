@@ -21,11 +21,15 @@ const getAllUsers = () => {
 }
 
 const updateProfile = (data) => {
-    return baseAPI.put("/profile-update",data)
+    return baseAPI.put("/profile-update", data)
 }
 
-const deleteUser = ()=>{
+const deleteUser = () => {
     return baseAPI.delete("/delete-profile")
+}
+
+const deleteUserByAmind = (id) => {
+    return baseAPI.delete(`/delete-by-admin/${id}`)
 }
 
 export {
@@ -35,5 +39,6 @@ export {
     login,
     getAllUsers,
     updateProfile,
-    deleteUser
+    deleteUser,
+    deleteUserByAmind
 }
