@@ -31,7 +31,11 @@ const register = async (req, res) => {
         })
         const token = jwt.sign({ id: user._id, admin: user.admin }, process.env.JWT_SECRET)
 
-        res.cookie("token", token)
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,        // required in production (https)
+            sameSite: "None"     // VERY IMPORTANT
+        })
         const userWithoutPassword = user.toObject()
         delete userWithoutPassword.password
         res.status(200).json({
@@ -217,7 +221,7 @@ const deleteUser = async (req, res) => {
 const deleteUserByAmind = async (req, res) => {
     try {
         // console.log(req.params.id);
-        
+
         const { id } = req.params
         await userModel.findByIdAndDelete(id)
 
