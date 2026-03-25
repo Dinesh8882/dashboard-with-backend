@@ -27,7 +27,7 @@ const Users = () => {
     getUserDetails();
   }, []);
 
-  // 🔥 DELETE USER
+  //  DELETE USER
   const handleDelete = async (id) => {
 
     try {
@@ -38,7 +38,7 @@ const Users = () => {
     }
   };
 
-  // 🔍 SEARCH + 🎯 FILTER
+  //  SEARCH + FILTER
   const filteredUsers = users
     .filter((u) =>
       u.name.toLowerCase().includes(search.toLowerCase())
