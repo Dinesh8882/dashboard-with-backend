@@ -15,7 +15,11 @@ app.use(cors({
 
 connectedDB()
 
+
 app.use('/api', userRouter)
+app.get('/',(req,res)=>{
+    res.send("Helo")
+})
 
 
 
