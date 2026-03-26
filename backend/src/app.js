@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(cors({
-    origin: "https://dashboard-with-backend.vercel.app", // your frontend URL
+    origin: ["http://localhost:5173","https://dashboard-with-backend.vercel.app"], // your frontend URL
     credentials: true
 }))
 

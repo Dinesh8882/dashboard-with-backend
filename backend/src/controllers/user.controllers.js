@@ -34,7 +34,7 @@ const register = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,        // required in production (https)
-            sameSite: "None"     // VERY IMPORTANT
+            // sameSite: "None"     // VERY IMPORTANT
         })
         const userWithoutPassword = user.toObject()
         delete userWithoutPassword.password
