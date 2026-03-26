@@ -34,7 +34,7 @@ const register = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,        // required in production (https)
-            // sameSite: "None"     // VERY IMPORTANT
+            sameSite: "None"     // VERY IMPORTANT
         })
         const userWithoutPassword = user.toObject()
         delete userWithoutPassword.password
@@ -83,7 +83,11 @@ const login = async (req, res) => {
 
         const token = jwt.sign({ id: userFound._id, role: userFound.role }, process.env.JWT_SECRET)
 
-        res.cookie("token", token)
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,        
+            sameSite: "None"     
+        })
 
         const userWithoutPassword = userFound.toObject()
         delete userWithoutPassword.password
