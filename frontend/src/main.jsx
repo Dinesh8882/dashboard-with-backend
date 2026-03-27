@@ -6,9 +6,11 @@ import App from "./App.jsx";
 import { BrowserRouter } from 'react-router-dom'
 import Navbar from "./components/Navbar.jsx";
 import ContextProvider from "./context/userContext.jsx";
+import Loader from "./components/Loader.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
+    <Loader />
     <ContextProvider>
       <Navbar />
       <App />
