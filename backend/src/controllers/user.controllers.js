@@ -85,8 +85,8 @@ const login = async (req, res) => {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: true,        
-            sameSite: "None"     
+            secure: true,
+            sameSite: "None"
         })
 
         const userWithoutPassword = userFound.toObject()
@@ -153,13 +153,17 @@ const userDetails = async (req, res) => {
 
 const logout = (req, res) => {
     try {
-        res.clearCookie("token")
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None"
+        })
         res.status(200).json({
             succuss: true,
             message: "User logged out successfully!"
         })
         console.log(req);
-        
+
     } catch (error) {
         res.status(500).json({
             success: false,
