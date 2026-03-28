@@ -175,7 +175,7 @@ const update = async (req, res) => {
                 name,
                 email
             },
-            { new: true }
+            { returnDocument: "after" }
         )
 
         if (!user) {
