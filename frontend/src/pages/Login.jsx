@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
 import { UserContext } from "../context/userContext";
+import Loading from "../components/Loading";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -9,8 +10,9 @@ const Login = () => {
         password: "",
     });
     const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
 
-    const { setUserData, setLoading, userData } = useContext(UserContext)
+    const { setUserData } = useContext(UserContext)
     const navigate = useNavigate()
     const handleChange = (e) => {
         setError("")
@@ -23,20 +25,20 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true)
             const res = await login(formData)
-            console.log(res);
 
             if (res.data.success) {
                 setUserData(res.data.userWithoutPassword)
                 navigate('/')
+                setLoading(false)
             }
 
         } catch (err) {
             setError(err.response.data.message)
-        }
-        finally {
             setLoading(false)
         }
+
     };
 
 
@@ -72,7 +74,7 @@ const Login = () => {
                     type="submit"
                     className="bg-blue-600 cursor-pointer text-white py-2 rounded hover:bg-blue-700 transition"
                 >
-                    Login
+                    {loading ? <Loading/> : "Login"}
                 </button>
                 <NavLink to='/register'>Don't have an account? <span className="text-blue-600 font-bold">Register</span></NavLink>
                 <p className="text-red-500 text-center">{error && error}</p>
