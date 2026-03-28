@@ -30,7 +30,7 @@ function App() {
         userData ? <Navigate to='/' /> : <Login />
       }
       />
-      <Route path='/profile' element={<Profile />} />
+      <Route path='/profile' element={userData ? <Navigate to='/' /> : <Profile />} />
       <Route path='/update-profile' element={<UpdateProfile/>}/>
       <Route path='*' element={<PageNotFound />} />
 

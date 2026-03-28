@@ -158,6 +158,8 @@ const logout = (req, res) => {
             succuss: true,
             message: "User logged out successfully!"
         })
+        console.log("hello");
+        
     } catch (error) {
         res.status(500).json({
             success: false,
