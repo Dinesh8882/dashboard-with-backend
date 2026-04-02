@@ -1,7 +1,7 @@
 import React from "react";
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
-  const tabs = ["dashboard", "users", "products", "orders", "settings"];
+  const tabs = ["dashboard", "users", "products","add product", "orders", "settings"];
 
  
   return (

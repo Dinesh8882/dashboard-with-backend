@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { registerUser } from "../services/authService";
 import { UserContext } from "../context/userContext";
 import { NavLink, useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -11,8 +12,8 @@ const Register = () => {
     role: ""
   });
   const [err, setErr] = useState("")
-
-  const { setUserData, userData } = useContext(UserContext)
+  const [loading, setLoading] = useState(false)
+  const { setUserData } = useContext(UserContext)
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -26,17 +27,19 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const res = await registerUser(formData)
-      console.log(res);
 
       if (res.status === 200) {
         setUserData(res.data.userWithoutPassword)
         navigate('/')
+        setLoading(false)
       }
     } catch (error) {
       if (!error.response.data.success) {
         setErr(error.response.data.message)
       }
+      setLoading(false)
     }
     setFormData({
       name: "",
@@ -120,7 +123,7 @@ const Register = () => {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
         >
-          Register
+          {loading ? <Loading /> : "Register"}
         </button>
         <NavLink to='/login'>have an account? <span className="text-blue-600 font-bold">Login</span></NavLink>
       </form>

@@ -20,6 +20,7 @@ const Profile = () => {
             userLogout();
             navigate("/register");
         } catch (error) {
+            setLoading(false)
             console.log(error.message);
         }
     };

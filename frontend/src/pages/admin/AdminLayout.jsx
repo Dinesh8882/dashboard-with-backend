@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import Topbar from "./components/Topbar";
+import Sidebar from "../../components/Sidebar";
+import Topbar from "../../components/Topbar";
 
 import Dashboard from "./Dashboard";
 import Users from "./Users";
 import Products from "./Products";
 import Orders from "./Orders";
+import AddProduct from "./AddProduct";
 import Settings from "./Settings";
 
 const AdminLayout = () => {
@@ -17,6 +18,8 @@ const AdminLayout = () => {
         return <Users />;
       case "products":
         return <Products />;
+      case "add product":
+        return <AddProduct />;
       case "orders":
         return <Orders />;
       case "settings":

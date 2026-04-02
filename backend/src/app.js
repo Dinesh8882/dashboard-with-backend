@@ -3,6 +3,7 @@ import connectedDB from './db/connectedDB.js'
 import userRouter from './routes/user.routes.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import productRouter from './routes/product.routes.js'
 const app = express()
 
 app.use(express.json())
@@ -17,6 +18,7 @@ connectedDB()
 
 
 app.use('/api', userRouter)
+app.use('/api',productRouter)
 app.get('/',(req,res)=>{
     res.send("Helo")
 })

@@ -19,7 +19,7 @@ const Navbar = () => {
     <nav className="bg-blue-500 text-white px-6 py-4 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto">
 
-        <h1 className="text-xl font-bold">MyApp</h1>
+        <h1 className="text-xl font-bold">{userData? `${userData?.name?.slice(0, 4)}`:"MyApp"}</h1>
 
         <ul className="flex space-x-6">
           <li>

@@ -2,9 +2,10 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../services/authService";
+import Loading from "../components/Loading";
 
 const UpdateProfile = () => {
-    const { userData, setUserData} = useContext(UserContext);
+    const { userData, setUserData } = useContext(UserContext);
 
     const [formData, setFormData] = useState({
         name: userData?.name || "",
@@ -13,7 +14,7 @@ const UpdateProfile = () => {
 
     const navigate = useNavigate();
     const [message, setMessage] = useState("");
-    const [loading, setLoading ] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     // handle input change
     const handleChange = (e) => {
@@ -34,10 +35,8 @@ const UpdateProfile = () => {
             if (res.data.success) {
                 setUserData(res.data.user)
                 setMessage("Profile updated successfully ");
-                setTimeout(() => {
-                    navigate("/profile");
-                }, 1500)
-
+                navigate("/profile");
+                setLoading(false)
             } else {
                 setMessage(res.data.message || "Update failed ");
             }
@@ -45,8 +44,6 @@ const UpdateProfile = () => {
         } catch (error) {
             setMessage("Something went wrong ");
             console.log(error.message);
-
-        } finally {
             setLoading(false);
         }
     };
@@ -105,7 +102,7 @@ const UpdateProfile = () => {
                                 : "bg-blue-500 hover:bg-blue-600"
                                 }`}
                         >
-                            {loading ? "Updating..." : "Save"}
+                            {loading ? <Loading /> : "Save"}
                         </button>
 
                         <button

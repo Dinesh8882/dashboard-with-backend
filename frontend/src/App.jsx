@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Register from './pages/Register'
 import ProductPage from './pages/Product'
-import AdminLayout from './pages/Admin'
 import { fatchedUserData } from './services/authService'
 import { UserContext } from './context/userContext'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -11,6 +10,7 @@ import Login from './pages/Login'
 import PageNotFound from './pages/PageNotFound'
 import Profile from './pages/Profile'
 import UpdateProfile from './pages/UpdateProfile'
+import AdminLayout from './pages/admin/AdminLayout'
 
 function App() {
   const { userData, loading } = useContext(UserContext)
