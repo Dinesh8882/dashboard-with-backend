@@ -7,6 +7,7 @@ export const UserContext = createContext()
 const ContextProvider = ({ children }) => {
 
     const [userData, setUserData] = useState(null)
+    const [productData, setProductData] = useState(null)
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
 
@@ -44,7 +45,10 @@ const ContextProvider = ({ children }) => {
         userData,
         loading,
         setLoading,
-        userLogout
+        userLogout,
+
+        productData,
+        setProductData
     }
 
     return (

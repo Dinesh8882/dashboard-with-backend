@@ -7,9 +7,11 @@ import { BrowserRouter } from 'react-router-dom'
 import Navbar from "./components/Navbar.jsx";
 import ContextProvider from "./context/userContext.jsx";
 import Loader from "./components/Loader.jsx";
+import { ToastContainer } from "react-toastify";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
+    <ToastContainer />
     <Loader />
     <ContextProvider>
       <Navbar />

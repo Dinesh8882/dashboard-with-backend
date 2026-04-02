@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { addProduct } from "../../services/productService";
+import Loading from "../../components/Loading";
+import { UserContext } from "../../context/userContext";
 
+
+import { toast } from 'react-toastify'
 export default function AddProduct() {
+  const { setProductData } = useContext(UserContext)
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -9,6 +14,7 @@ export default function AddProduct() {
     image: "",
     stock: "",
   });
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
     setFormData({
@@ -19,14 +25,24 @@ export default function AddProduct() {
 
   const handleSubmit = async (e) => {
     try {
+      setLoading(true)
       e.preventDefault();
       const res = await addProduct(formData)
-      if(res.data.success){
-        console.log(res.data);
+      if (res.data.success) {
+        setProductData(res.data)
+        setLoading(false)
+        toast.success(res.data.message)
       }
+
+      setFormData({
+        name: "",
+        price: "",
+        currency: "INR",
+        image: "",
+        stock: "",
+      })
     } catch (error) {
-      console.log(error.response?.message || error.message);
-      
+      toast.error(error.response?.message || error.message);
     }
   };
 
@@ -125,7 +141,7 @@ export default function AddProduct() {
             type="submit"
             className="w-full cursor-pointer bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition"
           >
-            Add Product
+            {loading ? <Loading /> : "Add Product"}
           </button>
 
         </form>
