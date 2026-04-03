@@ -29,7 +29,7 @@ export default function AddProduct() {
       e.preventDefault();
       const res = await addProduct(formData)
       if (res.data.success) {
-        setProductData(res.data)
+        setProductData(prevData => [...prevData, res.data])
         setLoading(false)
         toast.success(res.data.message)
       }
