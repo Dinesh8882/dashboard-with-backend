@@ -1,39 +1,60 @@
 import { useState } from "react";
+import { deleteProduct } from '../services/productService'
 
+const useProductActions = () => {
 
-const useProductActions = (initialProducts = []) => {
-
-    const [products, setProducts] = useState(initialProducts);
+    const [products, setProducts] = useState([]);
     const [editingIndex, setEditingIndex] = useState(null);
     const [editProduct, setEditProduct] = useState({});
+    const [loading, setLoading] = useState({
+        deleteLoading: false
+    })
 
     const startEditing = (index) => {
         // console.log(products[index]);
     };
 
-    //   const cancelEditing = () => {
-    //     setEditingIndex(null);
-    //     setEditProduct({});
-    //   };
-
     const saveEdit = () => {
 
     };
 
-    const deleteProduct = (index) => {
-        setProducts(prevProduct => prevProduct.filter((_, i) => index !== i))
+    const deletePro = async (id) => {
+        try {
+            
+            setLoading(prevLoading => ({
+                ...prevLoading,
+                deleteLoading: true
+            }))
+            const res = await deleteProduct(id)
+        
+
+            if (res.data.success) {
+                setProducts(prev => prev.filter(p => p._id !== id))
+                setLoading(prevLoading => ({
+                    ...prevLoading,
+                    deleteLoading: true
+                }))
+            }
+            
+            
+        } catch (error) {
+            console.log(error.message || error.response.message);
+        }
     };
 
     const handleChange = (e) => {
 
     };
+
+
     return {
         products,
+        setProducts,
         editingIndex,
         editProduct,
         startEditing,
         saveEdit,
-        deleteProduct,
+        deletePro,
         handleChange
     }
 }

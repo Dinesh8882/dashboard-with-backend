@@ -7,7 +7,7 @@ export const UserContext = createContext()
 const ContextProvider = ({ children }) => {
 
     const [userData, setUserData] = useState(null)
-    const [productData, setProductData] = useState(null)
+    const [productData, setProductData] = useState([])
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
 

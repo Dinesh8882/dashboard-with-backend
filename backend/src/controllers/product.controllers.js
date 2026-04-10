@@ -47,7 +47,8 @@ const getAllProducts = async (req, res) => {
         if (products.length === 0) {
             return res.status(200).json({
                 success: true,
-                message: "Products not found!"
+                message: "Products not found!",
+                products
             })
         }
 
@@ -91,9 +92,35 @@ const productFineById = async (req, res) => {
     }
 }
 
+const deteleProduct = async (req, res) => {
+    try {
+        const { id } = req.params
+        const deleteProduct = await productModel.findOneAndDelete(id)
+
+        if (!deleteProduct) {
+            return res.status(400).json({
+                success: false,
+                message: "Product not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Product deleted successfuly!"
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
 
 export {
     addProduct,
     getAllProducts,
-    productFineById
+    productFineById,
+    deteleProduct
 }
